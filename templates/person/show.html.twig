@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Person{% endblock %}
+
+{% block body %}
+    <h1>Person</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ person.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ person.name }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ person.age }}</td>
+            </tr>
+            <tr>
+                <th>Father</th>
+                <td>
+                    {% if person.father.name is defined %}
+                        {{ person.father.name }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Mother</th>
+                <td>
+                    {% if person.mother.name is defined %}
+                        {{ person.mother.name }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Children</th>
+                <td>
+                    {% if person.mothersChildren is defined %}
+                        {% for child in person.mothersChildren %}
+                            {{ child.name }}<br>
+                        {% endfor %}
+                    {% endif %}
+                    {% if person.fathersChildren is defined %}
+                        {% for child in person.fathersChildren %}
+                            {{ child.name }}<br>
+                        {% endfor %}
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('person_index') }}">back to list</a>
+
+    <a href="{{ path('person_edit', {'id': person.id}) }}">edit</a>
+
+    {{ include('person/_delete_form.html.twig') }}
+{% endblock %}
