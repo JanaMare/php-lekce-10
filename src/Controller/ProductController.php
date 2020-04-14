@@ -26,6 +26,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/new", name="product_new", methods="GET|POST")
      */
+
     public function new(Request $request): Response
     {
         $product = new Product();
