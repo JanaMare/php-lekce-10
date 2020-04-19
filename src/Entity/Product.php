@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,16 @@ class Product
      * @ORM\ManyToOne(targetEntity="App\Entity\Manufacturer", inversedBy="products")
      */
     private $manufacturer;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Supplier", inversedBy="products")
+     */
+    private $suppliers;
+
+    public function __construct()
+    {
+        $this->suppliers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -88,4 +100,32 @@ class Product
         $this->manufacturer = $manufacturer;
         return $this;
     }
+
+    /**
+     * @return Collection|Supplier[]
+     */
+    public function getSuppliers(): Collection
+    {
+        return $this->suppliers;
+    }
+
+    public function addSupplier(Supplier $supplier): self
+    {
+        if (!$this->suppliers->contains($supplier)) {
+            $this->suppliers[] = $supplier;
+        }
+
+        return $this;
+    }
+
+    public function removeSupplier(Supplier $supplier): self
+    {
+        if ($this->suppliers->contains($supplier)) {
+            $this->suppliers->removeElement($supplier);
+        }
+
+        return $this;
+    }
 }
+
+

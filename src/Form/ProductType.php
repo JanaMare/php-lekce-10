@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Manufacturer;
+use App\Entity\Supplier;
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,9 +18,15 @@ class ProductType extends AbstractType
             ->add('name')
             ->add('price')
             ->add('description')
-            ->add('tag', EntityType::class, [
+            ->add('Manufacturer', EntityType::class, [
                 'class' => Manufacturer::class,
                 'choice_label'=>'name'
+            ])
+            ->add('suppliers', EntityType::class, [
+                'class' => Supplier::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
             ])
         ;
     }
